@@ -71,12 +71,8 @@ public class HtmlController {
 
 	@RequestMapping("/query.html")
 	public String getQueryHtml(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return this.htmlTemplate.replaceAll("%wql%", "").replaceAll("%response%", "").replaceAll("%message%", "").replace("%restfulRequests%", "").replace("%profile%", "").replace("%token%", "").replace("%stemming%", "").replace("%spelling%", "");
-	}
-
-	@RequestMapping("/status.html")
-	public String getStatusHtml(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return this.htmlTemplate.replaceAll("%wql%", "").replaceAll("%response%", "").replaceAll("%message%", "").replace("%restfulRequests%", "").replace("%profile%", "").replace("%token%", "").replace("%stemming%", "").replace("%spelling%", "");
+		return this.htmlTemplate.replaceAll("%wql%", "").replaceAll("%response%", "").replaceAll("%message%", "").replace("%restfulRequests%", "").replace("%profile%", "").replace("%token%", "").replace("%stemming%", "").replace("%spelling%", "")
+				.replace("%server%", "").replace("%port%", "").replace("%dbname%", "").replace("%username%", "").replace("%password%", "");
 	}
 
 	@RequestMapping("/help.html")
@@ -293,7 +289,14 @@ public class HtmlController {
 	}
 
 	@RequestMapping("/queryToHtml")
-	public String queryToHtml(@RequestParam(value = "env", defaultValue = "dev") String environment, @RequestParam(value = "wql", defaultValue = "SELECT X FROM Y") String wql, @RequestParam(value = "token", defaultValue = "") String token) {
+	public String queryToHtml(@RequestParam(value = "env", defaultValue = "dev") String environment, 
+			@RequestParam(value = "wql", defaultValue = "SELECT X FROM Y") String wql, 
+			@RequestParam(value = "token", defaultValue = "") String token,
+			@RequestParam(value = "server", defaultValue = "") String server,
+			@RequestParam(value = "port", defaultValue = "") String port,
+			@RequestParam(value = "dbname", defaultValue = "") String dbname,
+			@RequestParam(value = "username", defaultValue = "") String username,
+			@RequestParam(value = "password", defaultValue = "") String password) {
 
 		wql = wql.replaceAll("select", "SELECT");
 		saveHistory(wql);
@@ -319,6 +322,7 @@ public class HtmlController {
 		// }
 
 		try {
+			System.out.println("server --->" + server);
 			if (!cleanWQL.equalsIgnoreCase("SELECT X FROM Y")){
 				QueryBO querybo = new QueryBO(new DbDAO(environment));
 				ResultSet response = querybo.executeQueryDB(cleanWQL);
@@ -333,14 +337,10 @@ public class HtmlController {
 
 				outcome = outcome.replace("%message%", message);
 
-				if (token != null) {
-					outcome = outcome.replace("%token%", token);
-				}
 			} else {
 				outcome = outcome.replace("%message%", "");
 				outcome = outcome.replace("%response%", "Please, type your query.");
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -350,6 +350,32 @@ public class HtmlController {
 			}
 			outcome = outcome.replace("%message%", "Error while executing query.");
 			outcome = outcome.replace("%response%", e.getMessage());
+		}
+		
+		if (token != null) {
+			outcome = outcome.replace("%token%", token);
+		} else {
+			outcome = outcome.replace("%token%", "");
+		}
+		
+		if (server != null) {
+			outcome = outcome.replace("%server%", server);
+		}
+		
+		if (port != null) {
+			outcome = outcome.replace("%port%", port);
+		}
+		
+		if (dbname != null) {
+			outcome = outcome.replace("%dbname%", dbname);
+		}
+		
+		if (username != null) {
+			outcome = outcome.replace("%username%", username);
+		}
+		
+		if (password != null) {
+			outcome = outcome.replace("%password%", password);
 		}
 
 		return outcome;
