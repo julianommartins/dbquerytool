@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WEX-WS WQL HELP</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+    .toggler { width: 500px; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { width: 240px; height: 170px; padding: 0.4em; position: relative; }
+    #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+    .ui-effects-transfer { border: 2px dotted gray; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<table><tr>
+<td><img src="rsz_watson.jpg" alt="Watson Logo"></td>
+<td><h3>WEX-WS WQL HELP</h3></td>
+</tr></table>
+<p>WEX-WS perform searches at WEX using REST. In order to be user friendly, we have developed a simple language called WQL, so, Its easy to write query very similar to traditional SQL.</p>
+<p>WQL Is an experimental WEX query language under development</p>
+<p>The purpose of this query language is to facilitate WEX query definitions</p>
+<p>WQL has been implemented as a SQL like which all developers are familiar with</p>
+<p>WQL is not relational. It is a very simplistic implementation to allow WEX queries definitions</p>
+<p>WQL general form:</p>   
+<p>SELECT FIELDS field-list FACETS facetlist FROM collection WHERE criteria-xpath-expression START start NUM num SORTBY sort-xpath-expression</p>
+<p>WHERE:</p>   
+<p>field-list: Comma separated collection's field names</p>
+<p>facet-list: Comma separated collection's facet names</p>
+<p>collection: Collection to query</p>
+<p>criteria-xpath-expression: any valid xpath expression <a href="http://saxon.sourceforge.net/saxon6.5.3/expressions.html">xpath-expressions</a></p>
+<p>START: Numeric value</p>
+<p>NUM: Numeric value</p>
+<p>sort-xpath-expression: any valid xpath expression <a href="http://saxon.sourceforge.net/saxon6.5.3/expressions.html">xpath-expressions</a></p>
+
+<p>WQL example:</p>   
+<p>SELECT FIELDS PLAN_ID,OPPORTUNITY_REVENUE FROM PMP_StaffingPlan WHERE $OPPORTUNITY_REVENUE=0 START 10 NUM 50 SORTBY $PLAN_ID</p>
+<p>SELECT FIELDS EMAIL_RECIPIENT FACETS EMAIL_RECIPIENT_FACET FROM PMP_Opportunity WHERE boolean($EMAIL_RECIPIENT) NUM 50 -- will show just results that HAVE EMAIL_RECIPIENT</p>
+<p>SELECT FIELDS EMAIL_RECIPIENT FACETS EMAIL_RECIPIENT_FACET FROM PMP_Opportunity WHERE not($EMAIL_RECIPIENT) NUM 50 -- will show just results that DO NOT HAVE EMAIL_RECIPIENT</p>
+<p>SELECT FIELDS OPPORTUNITY_CRM_ID FROM PMP_Opportunity WHERE TEXTSEARCH '2XXXX' -- will search all over the collection for the term 2XXXX</p>
+<p>
+SELECT 
+FIELDS OPPORTUNITY_CRM_ID, OPPORTUNITY_ID, DECISION_DATE_FACET, DECISION_DATE 
+FACETS DECISION_DATE_FACET
+FROM PMP_Opportunity
+WHERE
+TEXTSEARCH '2xxx-'</p>
+</body>
+</html>

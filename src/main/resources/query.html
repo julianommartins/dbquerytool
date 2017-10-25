@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<title>Database Query Tool (DB-QT)</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <style>
+    .toggler { width: 500px; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { width: 240px; height: 170px; padding: 0.4em; position: relative; }
+    #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+    .ui-effects-transfer { border: 2px dotted gray; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(function() {
+		$("#env").selectmenu();
+	});
+</script>
+<script>
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+</head>
+<body>
+<table><tr>
+<td><img src="wsdb.png" alt="WSDB Logo"></td>
+<td><h2>Database Query Tool</h2>Easily query Databases with SQL. For support or questions contact: <a href="mailto:juliano.jmm@gmail.com">Juliano Martins</a> </td>
+</tr></table>
+<hr>
+	<form name="queryToHtml" action="queryToHtml" method="post" enctype="application/x-www-form-urlencoded">
+	<label>Database: </label>
+<select id="env" name="env">
+		<option value="dev"  %selected-dev%>Development Server DB2</option>
+		<option value="systest"   %selected-systest%>SysTest Server DB2</option>
+		<option value="devTP"  %selected-devTP%>TP Development Server DB2</option>
+		<option value="systestTP"   %selected-systestTP%>TP SysTest Server DB2</option>
+		<option value="devMYSA"  %selected-devMYSA%>MYS Development DB2</option>
+		<option value="systestMYSA"   %selected-systestMYSA%>MYS SysTest DB2</option>
+</select>
+	<input type="submit" value="Submit Query" class="btn btn-primary">
+		<table class="table-condensed">
+			<tr>
+				<td>Query: <br><font size="1"><a href="/history.html" title="Show query history." data-toggle="tooltip">(history)</a></font></td>
+				<td><textarea class="form-control" style="font-size:12px;" NAME="wql" rows="12" cols="140" wrap="soft">%wql%</textarea></td>
+			</tr>
+			<tr>
+			<td colspan="2"><font color="red">%message%</font></td>
+			</tr>
+		</table>
+	</form>
+	%response%
+	<hr>
+	 <br>
+</body>
+</html>
