@@ -8,6 +8,7 @@ Checkout, build and run
     Checkout as a Maven project
     After checkout you can go to the project folder and run:
     mvn clean This will clean any compiled code, garbage, etc
+    mvn install - this will install dependencies
     mvn spring-boot:run This will build the project and launch it. You can access at: http://localhost:8080/queryToHtml
 
 If you need to run in another port, use the syntax (where 8009 its some example): mvn spring-boot:run -Dserver.port=8009
